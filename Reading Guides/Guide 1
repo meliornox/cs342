@@ -1,0 +1,35 @@
+Work through the following materials, recording answers to the questions so that you can bring them to class and submit them for review.
+
+Chapter 1
+
+Compare and contrast data, databases, database (management) systems and information systems.
+   Data: Recordable "facts"
+   Databases: A collection of related data
+   DMSs: A way to create and manage multiple databases
+   ISs: General systems that bring value through use of information
+
+Compare and contrast database systems with the following, using the main characteristics of the database approach in your discussion.
+   Data structures and algorithms
+   Traditional file systems
+      Databases are self-describing, separate the data from programs, support multiple views, and are shared.  Structures and algorithms do not have these functionalities.
+
+Identify the stakeholders of database systems
+   The person inputting the information, the person retrieving the information, the person using the information
+   
+Chapter 2
+
+Explain the significance of the categories of data models. Which type of model is displayed in Figure 2.1?
+   High-level/Conceptual: Close to the way users understand data
+   Mid-level/Representational: Easily understood by users but not greatly abstracted from a machine's storage methods
+   Low-level/Physical: Close to the way machines store data
+   Figure 2.1 shows a low-level model.
+   
+Explain the structure and significance of the three-schema architecture.
+   The Three-Schema Architecture has three schema definition levels-
+      The Internal Level: Describes the physical storage structure
+      The Conceptual Level: Describes the entire structure in slightly abstract ways, hiding the physical storage structure but showing the database functionality for all user groups
+      The External Level: Describes the portion of the database with which the user is interacting in a way that is largely representational
+   This structure is in place so the different areas of conceptualization of a DBMS can be physically represented.
+   
+Explain the tiers used in a typical web-based information system.
+   The client communicates with an application server, which communicates with both the client and the database, which is communicating with the application server.  The client runs interface programs, the application server runs application programs, performs security functions, and stores buisness rules, and the database server stores data and provides it to the application server.
