@@ -1,0 +1,20 @@
+Exercise 1.14
+
+Complete the exercise as written.
+
+Consider Figure 1.2.
+a. If the name of the ‘CS’ (Computer Science) Department changes to
+‘CSSE’ (Computer Science and Software Engineering) Department and
+the corresponding prefix for the course number also changes, identify the
+columns in the database that would need to be updated.
+
+	Student Major, Course Department, Course Course_number, Section Course_number, Prerequisite Course_number, Prerequisite Prerequisite_Number
+
+b. Can you restructure the columns in the COURSE, SECTION, and
+PREREQUISITE tables so that only one column will need to be updated?
+
+	Instead of Department being a few letters, assign every department a unique id number that does not change with the name of the department and prepend it to the numeric values of Course-number.  Then the only column that will need to be updated is Student Major, if that.
+
+In addition, consider whether you can restructure the schema so that only one field needs to be changed. If it’s possible, explain how. If not, explain why not.
+
+	Without redefining what a course number looks like it wouldn't be possible, in order to represent prerequisites two columns would have to be changed in order to accommodate CS changing to CSSE.

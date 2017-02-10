@@ -1,0 +1,26 @@
+Exercise 2.13
+
+Complete the exercise as written using SlatePermutate as the application. SlatePermutate is a an existing application, see slatepermutate.org, developed by students at Calvin to allow students to create and consider course schedules.
+
+Your solution should model colleges, courses and sections. To make the problem more interesting, please add the ability for students to register for the service and save sample schedules under their name. Specify your schema using a simple text format.
+
+Choose a database application with which you are familiar. Design a schema
+and show a sample database for that application, using the notation of
+Figures 1.2 and 2.1. What types of additional information and constraints
+would you like to represent in the schema? Think of several users of your
+database, and design a view for each.
+
+	College (Name, Synonym)
+	Course (Synonym, title, code, professor, room, type, credits)
+	Section (Identifier, Synonym, letter, time)
+	(Although I should note SlatePermutate doesn't appear to store section information. The user is able to change the letter and time of the section, so it isn't being pulled from a database.)
+	User (ID, firstName, lastName, username, password, type)
+	UserClass (UserID, Synonym, Identifier, schedule_identifier)
+	
+
+	I would like to be able to store the available sections and their times in the database so the user can just choose that they'd like a specific class and have all the possibilities modelled for them instead of having to manually input each section time.  It would also be useful to add functionality so that courses from multiple colleges could be permutated at the same time.
+	The constraints I would put on the system would be along the lines of strong typing and checking that courses are valid to register for, that they are being offered by a college and they do have a section, and that the time is within certain boundaries. Based on the type of user the access to certain tables would change. 
+	Users would have the ability to change the User and UserClass tables and view the Course and Section tables after choosing a College.  
+	Professors would be able to view the firstName and lastName of users registering for their sections, as well as being able to change the Course and 
+	Administrators would be able to change any table in the database.
+	
