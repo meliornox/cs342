@@ -1,0 +1,33 @@
+Work through the following materials this week, making sure that you can do the given activities. This unit is a more extended treatment of the material on database modeling covered in CS 262.
+
+Read Chapter 3.
+Compare and contrast the database and the software design processes. Are agile modeling practices applicable to database design as well?
+	To a certain extent the database foundation can be improved in a cyclical development process, but the nature of the initial design is such that if it isn't done right, an agile process will need to completely rework the database at every stage.
+
+Explain the following terms: entities, relationships (including cardinality and participation constraints), attributes (simple, composite, multi-valued and derived).
+Entities: A thing, like a person or department or building or order that has 	discrete qualities.
+Relationships: An interaction between or grouping of entities.
+	Cardinality: The number of data points that correlate to other data 		points, for example one-to-many or many-to-many.
+	Participation Constraints: Whether the existence of an entity depends 		on its relation to another entity.
+Attributes: The name of a role played by an entity within the relation.
+	Simple: An attribute that is atomic, i.e. it can't be split further.
+	Composite: An attribute that is composed of other attributes, either 		simple or composite.
+	Multi-Valued: An attribute that can have more than one value at a time.
+	Derived: An attribute whose value is calculated from other attributes.
+
+Explain weak entities and identifying relationships.
+	A weak entity can't be uniquely defined by attributes alone, it requires a primary key to be unique.  An identifying relationship is when a relation cannot exist without the context of a relationship to another entity.
+
+Model a person-household database (from class 2) using an ERD.
+	It's difficult at best to draw an ERD in a txt file, so I'll describe one. Family and Person are both entities.  Their relationship is many-to-many.  The action on families by people is "Is in a." Families have attributes of their address, city, state, and zipcode, as well as their primary ids.  People have attributes of title, name, gender, sex, status, role, family, and their primary id.  
+
+Skim the material in Section 3.8 on UML diagrams; we won’t use them here but we did in CS 262 and will again in unit 11.
+
+Note the ERD reference sheet in Figure 3.14.
+
+Read Chapter 9.
+Map the person-household ERD model from above to a relational database model.
+	Again, difficult to diagram in .txt, so here goes: Family and Person are both tables. Families have attributes of their address, city, state, and zipcode, as well as their primary ids.  People have attributes of title, name, gender, sex, status, role, and their primary id.  There is a third table PersonFamily, with attributes person and family.  A line goes from Family's primary ID to PersonFamily's family with a 1 by Family and an infinity symbol by PersonFamily. Another line runs from Person's primary ID to PersonFamily's person attribute with a 1 by person and an infinity symbol by PersonFamily.
+
+Explain how to map from a UML model to a relational database model. We will address this issue more carefully in a later unit (on object-relational mapping).
+	Make every entity a table. For many-to-many relationships make a linking table. Make primary keys if they do not already exist. Attributes should make up a relation. Make lines connecting the foreign and primary keys and denote their cardinality. 
