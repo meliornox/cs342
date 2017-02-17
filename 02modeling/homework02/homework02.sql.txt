@@ -1,0 +1,205 @@
+-- This command file is the answer to the homework problems for week 2 
+-- that can be found at
+-- https://cs.calvin.edu/courses/cs/342/kvlinden/02modeling/homework.html
+--
+-- CS 342 Spring 2017
+-- meliornox
+
+-- Do the following exercises:
+
+-- 1. Exercise 5.14
+-- Implement this schema using the Oracle SQL DDL. Please add an item name in
+-- the Item table.
+-- Include appropriate constraints and, in particular, specify what should be
+-- done on deletes (e.g., cascade, ...). Justify your implementation in the
+-- code comments.
+-- Include 3-5 sample records in each table. You’ll need to have sufficient
+-- records to drive the queries specified below, so it’s probably wise to look
+-- through the queries so that you will have non-empty and non-NULL results for
+-- each of them.
+
+-- Drop current database
+DROP TABLE Shipment;
+DROP TABLE Warehouse;
+DROP TABLE Order_Item;
+DROP TABLE Item;
+DROP TABLE Order;
+DROP TABLE Customer;
+
+-- Create database schema
+
+-- Table for Customers who are able to place orders of items
+-- NOT NULL to require all fields
+CREATE TABLE Customer (
+	ID integer PRIMARY KEY,
+	firstName varchar(100) NOT NULL,
+	lastName varchar(100) NOT NULL,
+	city varchar(100) NOT NULL
+);
+	
+-- Orders placed by customers
+-- ON DELETE CASCADE because an order can't be shipped to a customer that
+--   doesn't exist.
+-- NOT NULL because an order shouldn't be created without a customer to ship
+--   to.
+-- Order total should not be included, as is it can be different than the sum
+--   of the items' individual prices. It should be positive and nonzero.
+CREATE TABLE Order (
+	ID integer PRIMARY KEY,
+	customerID integer NOT NULL,
+	orderDate date,
+	total float,
+	FOREIGN KEY (customerID) REFERENCES Customer(ID) ON DELETE CASCADE,
+	CHECK (total > 0);
+);
+
+-- Table for items which make up orders, joined in OrderItem
+-- CHECK price is greater than zero because this is a business, it's not doing
+--   this to give things away or pay people to take them.
+CREATE TABLE Item (
+	ID integer PRIMARY KEY,
+	name varchar(100),
+	price float,
+	CHECK (price > 0)
+);
+	
+-- Linking table for Orders and Items
+-- Each entry has a surrogate key so multiple quantities of the same item on 
+--   the same order.
+-- ON DELETE CASCADE so that if the Item doesn't exist the rest of the order
+--   can still be filled, in a perfect world this would flag something, and
+--   also if the Order is deleted its Items are also deleted.
+-- NOT NULL because an Order Item should not have a NULL orderID or itemID
+-- Orders should specify more than 0 Items
+CREATE TABLE OrderItem (
+	ID integer PRIMARY KEY,
+	orderID integer NOT NULL,
+	itemID integer NOT NULL,
+	quantity integer,
+	FOREIGN KEY (orderID) REFERENCES Order(ID) ON DELETE CASCADE,
+	FOREIGN KEY (itemID) REFERENCES Item(ID) ON DELETE CASCADE,
+	CHECK (quantity > 0)
+);
+
+-- Warehouse sources Items
+-- City of a Warehouse is not allowed to be NULL
+CREATE TABLE Warehouse (
+	ID integer PRIMARY KEY,
+	city varchar(100) NOT NULL,
+);
+	
+-- Shipments for Orders
+-- Surrogate key because OrderItems should be allowed to ship from several
+--   Warehouses piecemeal, also if part of an OrderItem is backordered the
+--   Warehouse that shipped the first portion should be able to ship the second
+--   portion.  Also the reason for the pieces field.
+-- If a Warehouse does not exist it should not be assigned Shipments
+-- If an Order does not exist it should not be shipped
+CREATE TABLE Shipment (
+	ID integer PRIMARY KEY,
+	orderItemID integer NOT NULL,
+	pieces integer NOT NULL,
+	warehouseID integer NOT NULL,
+	shippedOn date,
+	FOREIGN KEY (orderItemID) REFERENCES OrderItem(ID) ON DELETE CASCADE,
+	FOREIGN KEY (warehouseID) REFERENCES Warehouse(ID) ON DELETE CASCADE
+);
+
+-- There should be an ALTER constraint that checks that the pieces of
+-- OrderItems for all Shipments do not exceed the amount ordered, but I can't
+-- find out how to do it.
+
+-- Load sample data
+INSERT INTO Customer VALUES (1, 'John', 'Smith', 'Middleville');
+INSERT INTO Customer VALUES (2, 'Jane', 'VanKlompenBerg', 'Grand Rapids');
+INSERT INTO Customer VALUES (3, 'Elroy', 'Blank', 'Houston');
+INSERT INTO Customer VALUES (4, 'Ergo', 'Terv', 'Minneapolis');
+
+INSERT INTO Order VALUES (1, 1,  '15-FEB-2017');
+INSERT INTO Order VALUES (2, 1,  '09-APR-2015');
+INSERT INTO Order VALUES (3, 2,  '20-DEC-2016');
+INSERT INTO Order VALUES (4, 3,  '15-OCT-2015');
+
+INSERT INTO Item VALUES (1, 'Coffee Maker', 24.99);
+INSERT INTO Item VALUES (2, 'Belt Buckle', 5.08);
+INSERT INTO Item VALUES (3, 'Trash Can', 10.25);
+
+INSERT INTO Item VALUES (1, 1, 1, 2);
+INSERT INTO Item VALUES (2, 1, 2, 1);
+INSERT INTO Item VALUES (3, 2, 1, 1);
+INSERT INTO Item VALUES (4, 2, 1, 1);
+INSERT INTO Item VALUES (5, 4, 3, 2);
+INSERT INTO Item VALUES (6, 4, 2, 3);
+INSERT INTO Item VALUES (7, 3, 3, 2);
+INSERT INTO Item VALUES (8, 3, 1, 8);
+
+INSERT INTO Warehouse VALUES (1, 'San Diego');
+INSERT INTO Warehouse VALUES (2, 'Nashville');
+INSERT INTO Warehouse VALUES (3, 'Oklahoma City');
+
+INSERT INTO Shipment VALUES (1, 1, 1, 1, '01-JAN-2015');
+INSERT INTO Shipment VALUES (2, 2, 1, 2, '01-JAN-2016');
+INSERT INTO Shipment VALUES (3, 3, 1, 3, '01-JAN-2017');
+
+
+-- 2. Exercise 5.20.a & c
+-- Consider only this modified version of the text exercise - What
+-- recommendations would you have for CIT if they were considering replacing 
+-- surrogate student ID numbers with a more natural key? Either suggest a new
+-- form of key or try to convince them that surrogate keys are acceptable.
+
+-- I would recommend keeping the current surrogate key.  If they wanted to
+-- forgo student ID numbers they would have to use the student's first name, 
+-- middle name, last name, and birthdate, and that would assume no parents
+-- would give their twins the same name.  Assigning id numbers is much simpler.
+
+-- 3. Write the SQL commands to retrieve the following from the customer-order
+-- database you built above.
+-- all the order dates and amounts for orders made by a customer with a
+-- particular name (one that exists in your database), ordered chronologically
+-- by date
+
+SELECT Order.orderDate, Order.total 
+FROM Order, Customer
+WHERE Customer.firstName = 'John'
+AND Customer.lastName = 'Smith'
+AND Customer.ID = Order.customerID
+ORDER BY orderDate DESC;
+
+-- all the customer ID numbers for customers who have at least one order in the database
+
+SELECT DISTINCT Order.customerID FROM Order, Customer
+WHERE Order.customerID = Customer.ID;
+
+-- the customer IDs and names of the people who have ordered an item with a particular name (one that exists in your database)
+
+SELECT Customer.ID, Customer.firstName, Customer.lastName 
+FROM Customer, Order, Item, OrderItem
+WHERE Item.name = 'Coffee Maker"
+AND OrderItem.itemID = Item.ID
+AND Order.ID = OrderItem.orderID
+AND Customer.ID = Order.customerID;
+
+-- 4. Complete lab exercises 2.2 & 2.3. (Maybe meant 2.4?)
+-- Exercise 2.3
+-- Can you modify the movies database to support the enumerated status type
+-- using the relational model itself rather than hard-coding the values in a
+-- CHECK constraint? If so, show how and explain the benefits and/or costs of
+-- doing it this way. If not, explain why not.
+
+-- The common answer on help sites is to use CHECK as a substitute for mySQL's
+-- ENUM in Oracle, so I think this would be the simplest solution.  I suppose -- if you made a table of status types and made a foreign key it would work,
+-- but it would mean joining the tables every time you wanted to check the
+-- status instead of using a simple check.
+
+-- Exercise 2.4
+-- Would you need an additional sequence for the performer relation primary key
+-- values? Why or why not?
+
+-- Not necessarily, you could use .nextVal, but keeping an additional sequence --   is more efficient.
+
+-- Do you see any problems with using sequences in a DDL command file to
+-- construct the full movies database?
+
+-- No, the problems with gaps or knowing where you're inserting wouldn't be a
+--   problem as long as everything is unique.
