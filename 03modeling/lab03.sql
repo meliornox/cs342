@@ -38,8 +38,6 @@ create table Person (
 	title varchar(4),
 	firstName varchar(100),
 	lastName varchar(100),
-	gender varchar(100),
-	sex varchar(100),
 	membershipStatus char(1) CHECK (membershipStatus IN ('m', 'a', 'c')),
 	FOREIGN KEY (householdID) REFERENCES Household(ID),
 	FOREIGN KEY (mentorID) REFERENCES Person(ID),
@@ -68,6 +66,19 @@ create table PersonTeam (
 );
 
 INSERT INTO Household VALUES (0,'2347 Oxford Dr. SE','Grand Rapids','MI','49506','616-243-5680');
+INSERT INTO Household VALUES (1,'7654 Main St. SW','Grand Rapids','MI','49534','616-456-8910');
 
-INSERT INTO Person VALUES (0,'mr.','Keith','VanderLinden','m');
-INSERT INTO Person VALUES (1,'ms.','Brenda','VanderLinden','m');
+INSERT INTO Person VALUES (0, 1, 'Primary', NULL, 1, 'mr.','Keith','VanderLinden','m');
+INSERT INTO Person VALUES (1, 'Primary', NULL, 1, 'ms.','Brenda','VanderLinden','m');
+
+INSERT INTO Team VALUES (0, 'Music');
+INSERT INTO Team VALUES (1, 'Prayer');
+
+INSERT INTO Homegroup VALUES (0, 'First');
+INSERT INTO Homegroup VALUES (1, 'Second');
+
+INSERT INTO Request VALUES (0, 0, 0, 'Do the thing');
+INSERT INTO Request VALUES (1, 0, 1, 'Do the other thing');
+
+INSERT INTO PersonTeam VALUES (0, 0, 'Guitar', 'Forever');
+INSERT INTO PersonTeam VALUES (1, 1, 'Prayer-er', 'Until May 5, 2020');
