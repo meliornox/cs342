@@ -1,0 +1,94 @@
+-- Exercise 9.11 — Implement the schema by hand for this exercise, based on the
+-- model from the previous question. No automatic schema generation is 
+-- required.
+-- 
+-- Theodore Bigelow
+-- CS 342 Spring 2017
+-- 02/24/17
+--
+-- SQL file for homework 3 as required by the assignment at 
+-- https://cs.calvin.edu/courses/cs/342/kvlinden/03modeling/homework.html
+
+drop table PartOrder;
+drop table Part;
+drop table Order;
+drop table Employee;
+drop table Customer;
+
+-- Customer table for customers who will be making orders
+create table Customer (
+	ID integer PRIMARY KEY,
+	firstName varchar(100),
+	lastName varchar(100),
+	zipcode decimal(5)
+);
+
+-- Employee table for employees which will be assigned orders
+create table Employee (
+	ID integer PRIMARY KEY,
+	firstName varchar(100),
+	lastName varchar(100),
+	zip decimal(5)
+);
+
+-- Order table for orders made by customers and assigned to employees
+-- If Customer does not exist delete order, since no customer needs the order
+-- Set employeeID to NULL if Employee does not exist so the order can be
+--   reassigned.
+create table Order (
+	ID integer PRIMARY KEY,
+	customerID integer,
+	employeeID integer,
+	orderedOn date,
+	expectedShip date,
+	actualShip date,
+	FOREIGN KEY (customerID) REFERENCES Customer(ID) ON DELETE CASCADE,
+	FOREIGN KEY (employeeID) REFERENCES Employee(ID) ON DELETE SET NULL
+);
+
+-- Part table for parts that make up orders
+create table Part (
+	ID integer PRIMARY KEY,
+	name varchar(100),
+	price float,
+	available integer,
+	CHECK (available >= 0)
+);
+
+-- Join table for Parts and Orders
+-- If either the part or the order are deleted, we cannot fill that portion of
+--   the order
+-- Quantities must be greater than 0
+create table PartOrder (
+	orderID integer,
+	partID integer,
+	quantity integer,
+	CHECK (quantity > 0),
+	PRIMARY KEY (orderID, partID),
+	FOREIGN KEY (orderID) REFERENCES Order(ID) ON DELETE CASCADE,
+	FOREIGN KEY (partID) REFERENCES Part(ID) ON DELETE CASCADE
+);
+
+
+-- Insert values
+INSERT INTO Customer VALUES (1, 'Ava', 'Zygun', '49534');
+INSERT INTO Customer VALUES (2, 'Barb', 'Yelets', '49534');
+INSERT INTO Customer VALUES (3, 'Carl', 'Xerxes', '49534');
+
+INSERT INTO Employee VALUES (4, 'Darryl', 'Welsh', '49534');
+INSERT INTO Employee VALUES (1, 'Evan', 'VanderVan', '49437');
+INSERT INTO Employee VALUES (2, 'Frederick', 'Umber', '49632');
+
+INSERT INTO Order VALUES (1, 1, 1, '05-JAN-2017', '08-DEC-2017', '11-JUN-2017');
+INSERT INTO Order VALUES (2, 2, 2, '06-FEB-2016', '09-NOV-2016', '12-JUL-2016');
+INSERT INTO Order VALUES (3, 3, 3, '07-MAR-2015', '10-OCT-2015', '13-AUG-2015');
+
+INSERT INTO Part VALUES (1, 'Spigot', 10.03, 100);
+INSERT INTO Part VALUES (2, 'Bucket', 20.82, 200);
+INSERT INTO Part VALUES (3, 'Forge', 30.56, 300);
+
+INSERT INTO PartOrder VALUES (1, 1, 8);
+INSERT INTO PartOrder VALUES (1, 2, 3);
+INSERT INTO PartOrder VALUES (2, 1, 7);
+INSERT INTO PartOrder VALUES (2, 3, 5);
+INSERT INTO PartOrder VALUES (3, 3, 4);

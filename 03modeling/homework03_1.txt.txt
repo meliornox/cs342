@@ -1,0 +1,9 @@
+Consider the ERD given in Figure 3.21 (The AIRLINE database schema):
+Based on what you see in the diagram, explain the difference between flights, flight legs, and leg instances. Please give a short explanatory paragraph.
+A flight is an entire trip made up of flight legs, all of the hops between airports needed to get to the destination. A flight leg is the path between two airports, and a leg instance is when a flight leg is taken at a certain time.
+
+The names of some of the attributes in this diagram are underlined with dotted lines. You’ll note that this notation is not explained in the Figure 3.14 cheatsheet. What does it mean?
+The partial key of a weak entity, called a discriminator, is analogous to the primary key of a strong entity with the added requirement that the strong entity it is dependent on must pass at least one additional field to it to create a composite key and make it unique.  The discriminator is used without the rest of the composite key to distinguish between the weak entities related to the strong entitiy.
+
+You’ll note that the “SEAT” entity has a total participation in the “RESERVATION” relationship (i.e., we would write the cardinality constraint {1,*} on the “LEG_INSTANCE” side of the relationship). Why do you think the database modelers did it this way?
+When multiple people are reserving multiple seats in a group, each passenger can be assigned to each seat.
