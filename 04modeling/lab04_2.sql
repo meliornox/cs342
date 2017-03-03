@@ -31,7 +31,6 @@ SELECT pt.personName, pt.teamName, pv.personVisit
 FROM PersonTeam pt, PersonVisit pv
 WHERE pt.personName = pv.personName;
 
-
 -- Responses to lab exercises found at https://cs.calvin.edu/courses/cs/342/kvlinden/04modeling/lab.html
 -- Theodore Bigelow
 -- CS 342 Spring 2017
@@ -45,3 +44,16 @@ WHERE pt.personName = pv.personName;
 
 -- The view has the same number of records as the original tables. Does this mean that the original schema and the derived “view” schema are equally appropriate? If so, explain why; if not, explain why one of the schemata is better. Does your choice depend on context?
 -- By the definitions of normal forms yes, but normal forms are not everything.  Team membership and visit dates are both multiple values dependent on the person's name, so they should both have their own tables.  I don't think it's particularly dependent on context, I can't think of a context where one big table for something of this nature would be the best solution.
+
+-- Create a new table to store the data queried by the combined “view” query at the end of the command file and load it with the queried data. Note that you can load the data either using hard-coded INSERT commands (for some credit) or by inserting data selected from the original tables (for full credit).
+
+CREATE TABLE PersonTeamVisit(
+	personName varchar(10),
+	teamName varchar (10),
+	personVisit date
+);
+
+INSERT INTO PersonTeamVisit 
+SELECT T.personName, T.teamName, V.personVisit 
+FROM PersonTeam T, PersonVisit V
+WHERE T.personName = V.personName;

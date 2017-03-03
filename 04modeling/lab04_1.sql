@@ -46,23 +46,45 @@ INSERT INTO AltPerson VALUES (3, 'Jeff', 'm', NULL, NULL, NULL, 'deacons', 'chai
 --         Person (_ID_, name, status, mentorID)
 --         Team (_Name_, time)
 --         PersonTeam(_personID_,_teamName_, role)
+--
+-- Implement an appropriately normalized version of the AltPerson relation by editing the existing command file, adding your own create-table commands below the ones already in the file and using different table names to avoid naming conflicts. Your commands should do the following.
+--   Create your normalized sub-relations. For simplicity's sake, don't introduce new attributes; just use the ones in the original table (perhaps repeated as foreign keys).
+--   Populate your new relations by querying the data from the existing AltPerson database. Note that you may need to use a DISTINCT query to get unique key values from the raw data.
+--   Write queries to display the data in your new sub-relations.
 
+CREATE TABLE Person(
+	personID integer PRIMARY KEY,
+	mentorID integer,
+	name varchar(10,
+	status char(1),
+	FOREIGN KEY (mentorID) REFERENCES Person(personID) ON DELETE SET NULL
+);
 
+CREATE TABLE Team(
+	teamName varchar(10) PRIMARY KEY,
+	teamTime char(1)
+);
 
+CREATE TABLE PersonTeam(
+	personID integer,
+	teamName integer,
+	teamRole varchar(10),	
+	FOREIGN KEY (personID) REFERENCES Person(personID) ON DELETE CASCADE,
+	FOREIGN KEY (teamName) REFERENCES Team(teamName) ON DELETE CASCADE,
+	PRIMARY KEY (personID, teamName)
+);
 
+INSERT INTO Person SELECT DISTINCT personId, name, status, mentorId FROM AltPerson;
+INSERT INTO Team SELECT DISTINCT teamName, teamTime FROM AltPerson;
+INSERT INTO Person_Team SELECT DISTINCT personId, teamName, teamRole FROM AltPerson;
 
+SELECT * FROM Person;
+SELECT * FROM Team;
+SELECT * FROM Person_Team;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Challenge: Write a query the reproduces the old data table from your new tables.
+SELECT P.personID, P.name, P.status, M.id, M.name, M.status, T.teamName, T.teamRole, T.teamTime
+FROM Person P, Person M, PersonTeam PT, Team T
+WHERE P.mentorID = M.personID
+AND P.personID = PT.personID
+AND T.teamName = PT.teamName;

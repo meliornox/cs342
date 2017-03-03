@@ -1,0 +1,43 @@
+Theodore Bigelow
+meliornox
+03/03/2017
+
+Answers to the homework questions for section 4 found at https://cs.calvin.edu/courses/cs/342/kvlinden/04modeling/homework.html
+
+1.	Do exercise 14.31
+a.	The relation has a fixed number of columns, so it is in 1NF, assuming there is only ever one author.
+	For BCNF, consider the nontrivial functional dependencies:
+		book_title -> publisher, book_type, author_name, publisher
+		book_type -> list_price
+		author_name -> author_affil
+	The left side of every functional dependency is not a superkey, so the relation is not in BCNF.
+	Since the relation is not in BCNF, it is also not in 4NF since 4NF is a subset of BCNF.
+
+b.	A better relation (assuming single authors):
+	Book(ID, typeId, authorId, book_title, publisher)
+	Type(ID, book_type, list_price)
+	Author(ID, author_name, author_affil)
+
+	The relation is in 1NF because every table has a fixed number of columns.
+	Consider the following nontrivial functional dependencies:
+	Book.ID -> Book.typeId, Book.authorId, Book.book_title, Book.publisher
+	Type.ID -> Type.book_type, Type.list_price
+	Author.ID -> Author.author_name, Author.author_affil
+	Since the left side of every dependency is a superkey, the relation is in BCNF.
+	There are no multivalued dependencies, so the relation is in 4NF.
+
+2.	Do exercise 14.35
+a. Conceivably two editions could be published in the same year with the listed dependency, and two books with different names could have the same edition published in the same year, so the only candidate key would be
+	book_name, author, edition
+
+b. Since every book of a certain edition and year will have the same authors the only MVD is:
+	book ->> author | edition, copyright_year
+	
+c. 	BookAuthor(book_name, author)
+	BookEdition(book_name, edition, copyright_year) 
+	
+	This relation has the following functional dependencies:
+		book_name -> author
+		bood_name, edition -> copyright_year
+	Since the left sides of the fds are candidate keys, so the relation is in BCNF.
+	There are no nontrivial MVDs, so the relation is in 4NF.
