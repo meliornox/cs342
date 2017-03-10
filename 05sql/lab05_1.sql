@@ -130,6 +130,10 @@ INSERT INTO Request VALUES (4, 4,'22-OCT-1997',10,'the sermons are great','p','t
 SELECT H.ID, H.street, H.city, H.state, H.zipcode, H.phoneNumber, P.ID, P.title, P.firstName, P.lastName, P.membershipStatus, P.gender, P.birthdate, P.householdID, P.householdRole, P.homegroupID, P.homeGroupRole
 FROM Household H CROSS JOIN Person P;
 --     There will be 8 Households * 16 Persons = 128 records.  This is because every Household is joined with every Person.
+--     Challenge:
+SELECT Count(*) FROM(
+SELECT H.ID, H.street, H.city, H.state, H.zipcode, H.phoneNumber, P.ID, P.title, P.firstName, P.lastName, P.membershipStatus, P.gender, P.birthdate, P.householdID, P.householdRole, P.homegroupID, P.homeGroupRole
+FROM Household H CROSS JOIN Person P) CrossProduct;
 
 --   Retrieve the people who have birthdays specified in the database, ordered by day-of-year (i.e., Jan 1 birthdays go before Jan 2 birthdays, regardless of the year). Note that you can compute the day of year value using the Oracle function: TO_CHAR(birthdate, 'DDD').
 SELECT firstName, lastName, birthdate FROM Person WHERE birthdate IS NOT NULL ORDER BY TO_CHAR(birthdate, 'DDD') ASC;
