@@ -1,0 +1,16 @@
+Responses to lab exercises found at https://cs.calvin.edu/courses/cs/342/kvlinden/07sql/lab.html
+Theodore Bigelow
+CS 342 Spring 2017
+lab07 part 2
+03/17/2017
+
+Do the following for the query on which the view in the previous exercises is based.
+		SELECT firstName || ' ' || lastName AS Name, TRUNC(MONTHS_BETWEEN(SYSDATE, birthdate)/12) AS Age, birthdate
+		FROM Person;
+    a. Write an equivalent query in the relational algebra.
+
+	pi(firstName, lastName, age*, birthdate)(Person)
+	
+    b. Write an equivalent query in the domain relational calculus.
+	
+	{firstName, lastName, age*, birthdate|Person}
