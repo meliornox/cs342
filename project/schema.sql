@@ -3,7 +3,8 @@ CREATE TABLE Person(
 	firstName varchar(30),
 	lastName varchar(30),
 	status varchar(10),
-	CHECK (status IN('freshman','sophomore','junior','senior','staff')),	
+	email varchar(50),
+	CHECK (status IN('freshman','sophomore','junior','senior','staff'))	
 );
 
 CREATE TABLE Organization(
@@ -22,11 +23,11 @@ CREATE TABLE PersonOrganization(
 );
 
 CREATE TABLE Room(
+	ID integer PRIMARY KEY,
 	building varchar(30),
 	number integer,
 	capacity integer,
-	projector boolean,
-	PRIMARY KEY (building, number)
+	projector boolean
 );
 
 CREATE TABLE Arrangement(
@@ -56,13 +57,14 @@ CREATE TABLE PlanFood(
 );
 
 CREATE TABLE Event(
+	ID integer PRIMARY KEY,
 	roomID integer REFERENCES Room(ID) ON DELETE CASCADE,
 	cateringID integer REFERENCES CateringPlan(ID),
 	arrangementID integer REFERENCES Arrangement(ID),
 	organizerID REFERENCES Person(ID) ON DELETE SET NULL,
+	organizationID REFERENCES Organization(ID),
 	name varchar(30),
 	eventDatetime datetime,
 	duration float,
-	attendence integer,
-	PRIMARY KEY (roomID, eventDate, eventTime)
+	attendence integer
 );
