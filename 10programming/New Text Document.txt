@@ -1,0 +1,32 @@
+Work through the following materials this week, making sure that you can do the given activities.
+Sections 20.1-20.4.1 & 20.6 — Explain the following.
+interleaving vs. parallelism
+	Interleaving: Many processes are computed "at the same time" by switching between them really fast.
+	Parallelism: Many processes are computed concurrently by computing them on different cores or machines.
+the lost update and dirty read problems
+	Lost update: When interleaving two processes in such a way that a value gets read by one, updated by another, modified by the first and written by the first.  The update made by the second process is the lost update.
+	Dirty Read: When an update fails and the value is read.
+transactions, including commits and rollbacks
+	Transactions: An atomic unit of work
+	Commits: All transactions are in the log and the value is updated.
+	Rollbacks: When failure occurs restore the database to the last commit.
+the ACID properties
+	Atomicity: A transaction should be performed entirely or not performed at all. (responsibility of transaction system)
+	Consistency preservation: The database should always be in a consistent state. (responsibility of programmer)
+	Isolation: A transaction should not be interfered with by any other transaction executing concurrently. (enforced by concurrency control system)
+	Durability: The changes applied to the database by committed transaction must persist in the database. (responsibility of the recovery system)
+schedule: Ordering the operations of transactions to alleviate some of the problems above
+
+Chapter 21 introduction and Section 21.1 — Explain the following.
+
+lock: A variable that describes the state of an item
+
+two-phase locking: Only one thing is unlocked at a time.
+
+Review Oracle’s Overview of Transaction Processing in PL/SQL (only; you can skip the other sections on this page) — Compare and contrast the following.
+
+SAVEPOINT, COMMIT vs ROLLBACK [TO]
+Rolling back to a savepoint erases transactions that were not previously committed, committing them creates a new savepoint.
+LOCK TABLE vs. FOR UPDATE
+	Lock table allows you to allow or disallow access to whole tables
+	For update is for rows
