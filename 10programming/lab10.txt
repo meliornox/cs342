@@ -1,0 +1,21 @@
+-- Theodore Bigelow
+-- 04/12/17 CS 342 at Calvin College
+-- In response to the lab exercise 10.1 at https://cs.calvin.edu/courses/cs/342/kvlinden/10programming/lab.html
+-- For use with the imdb database at https://github.com/cs342/code/tree/master/databases/imdb
+
+Consider the following parallel schedule. What do you expect will happen at each step? and then run through the schedule to check your intuition.
+
+Session 1										Session 2				Comments
+Query the movie table.							Query the movie table.	These better be the same!  They are.
+Delete a movie and query the modified table.	repeat the query…		Note that Ocean’s 11 (#238071) has no role parents, so it’s a good movie to delete.  Must commit in order to register the delete, must commit after queries.
+Rollback and query.								repeat…	 				Delete without commit works but doesn't register on the second session, rollback then commit changes nothing as expected.
+Add a new movie and query.						repeat…	 				Works with commit
+Commit.											repeat…	 				Commit is necessary to see work on the other session.
+Now, manually run the schedule in two parallel SQL*Plus sessions and check to see if your expections were correct.
+They were
+
+Experiment a bit with some SQL*Plus sessions, making changes, exiting and restarting the session and then answer the following questions.
+    a. Does Oracle handle the transaction life-cycle (see Figure 20.4) with respect to starting and stopping SQL*Plus sessions?
+		Yes.
+    b. Can we implement any of the ACID properties using START-TRANSACTION/SAVEPOINT/ROLLBACK/COMMIT?
+		Yes.
