@@ -1,0 +1,29 @@
+C:\WINDOWS\system32>sqlplus imdb/bjarne
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Apr 13 20:13:28 2017
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> SET AUTOCOMMIT ON;
+SQL> SELECT rank FROM Movie WHERE id = 999999;
+
+      RANK
+----------
+       9.0
+
+SQL> UPDATE Movie M SET rank = rank + 0.2 WHERE M.id = 238071;
+
+1 row updated.
+
+Commit complete.
+SQL> SELECT rank FROM Movie WHERE id = 999999;
+
+      RANK
+----------
+       9.2
+
+SQL>

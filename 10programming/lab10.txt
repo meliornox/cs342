@@ -1,7 +1,6 @@
--- Theodore Bigelow
--- 04/12/17 CS 342 at Calvin College
--- In response to the lab exercise 10.1 at https://cs.calvin.edu/courses/cs/342/kvlinden/10programming/lab.html
--- For use with the imdb database at https://github.com/cs342/code/tree/master/databases/imdb
+Theodore Bigelow
+04/12/17 CS 342 at Calvin College
+In response to the lab exercise 10.1 at https://cs.calvin.edu/courses/cs/342/kvlinden/10programming/lab.html
 
 Consider the following parallel schedule. What do you expect will happen at each step? and then run through the schedule to check your intuition.
 
@@ -18,4 +17,4 @@ Experiment a bit with some SQL*Plus sessions, making changes, exiting and restar
     a. Does Oracle handle the transaction life-cycle (see Figure 20.4) with respect to starting and stopping SQL*Plus sessions?
 		Yes.
     b. Can we implement any of the ACID properties using START-TRANSACTION/SAVEPOINT/ROLLBACK/COMMIT?
-		Yes.
+		No, without locking ACID cannot be fully implemented.
