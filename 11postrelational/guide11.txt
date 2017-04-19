@@ -1,0 +1,55 @@
+Theodore Bigelow
+cs342 Spring 2017 4/19/17
+Guide Chapter 11
+
+Read Your First Cup: An Introduction to the Java EE Platform — Focus on Chapter 2, “Understanding Java Platform, Enterprise Edition”
+
+Explain the tiers discussed in the article. On which does J2EE focus? On which to the Oracle database focus?
+
+The client tier is applications that are clients accessing Java EE servers, usually from different machines.
+
+The web tier handles interaction between the client and business tiers.
+
+The business tier forms the business logic for an enterprise application.
+
+The enterprise information systems tier consists of many different information storage utilities that are accessed by the business tier.
+
+J2EE focuses on web and business 
+Oracle focuses on enterprise information systems
+
+Explain the nature of a J2EE container. What sort of containers are there?
+
+J2EE containers support the component by interfacing with the platform.  There are different containers for different platforms.
+
+A web container interfaces between the web client and server
+An Enterprise JavaBeans container interfaces between enterprise beans.
+An Application Client Container interfaces between Java EE application clients and their servers.
+
+Read The Java EE Tutorial — This tutorial provides extensive material on J2EE; focus on the sections listed here.
+
+Sections 1.7–1.8, “Java EE 7 APIs” — Explain the purpose of these technologies (only): JPA, JTA, JAX-RS*, JDBC, JAXB.
+
+JPA: The Java Persistence API is a Java standards-based solution for persistence.
+JTA: The Java Transaction API provides a standard interface for demarcating transactions.
+JAX-RS: The Java API for RESTful Web Services defines APIs for the development of web services built according to the Representational State Transfer architectural style. 
+JDBC: The Java Database Connectivity API allows the invocation of SQL commands from Java programming language methods.
+JAXB: The Java Architecture for XML Binding provides a convenient way to bind an XML schema to a representation in Java language programs.
+
+Section 5, “Packaging Applications” — Compare and contrast JARs, WARs & EARs.
+
+JAR WAR and EAR stand for Java, Web, and Enterprise ARchive respectively.  They are standard JAR files except for their extensions. AN EAR file contains Java EE modules and optionally, deployment descriptors. EJB modules are packaged as JAR files with a .jar extension, whereas web modules are packaged as JAR files with a .war extension, and application client modules are packaged as JAR files with a .jar extension.
+
+Review these tutorials, on which the lab is based: Developing a Java EE Application & Creating and Running Your First RESTful Web Service.
+
+Identify the IDE we’ll use for J2EE development.
+
+IntelliJ IDEA
+
+Identify the roles of the following technologies in the J2EE application: J2SE’s JDK; GlassFish.
+
+J2SE’s JDK provides tools for developing, debugging, and monitoring Java applications.
+GlassFish is an application server provider.
+
+Explain the nature of a RESTful webservice.*
+
+A RESTful webservice is built to work best on the Web. Representational State Transfer (REST) is an architectural style that specifies constraints, such as the uniform interface, that if applied to a web service induce desirable properties, such as performance, scalability, and modifiability, that enable services to work best on the Web. 
