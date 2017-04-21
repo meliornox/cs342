@@ -1,0 +1,8 @@
+1c. Some of the external libraries in the project pane have been covered in class, like Java Beans and Hibernate.  Java Beans can be made with J2EE, and Hibernate is a data integration framework for J2EE.
+1d. The HTML runs on the client.
+1e. This step uses the localhost on channel 8080.
+1f. A WAR is a directory structure that is ready for deployment onto a web server.
+1g. Exploded WARs are good for development, you can replace resources without replacing everything, which is faster.  However, for a final product a nice packaged WAR is preferred.
+1h. 	WAR: Web module containing files
+		EAR: WAR and JAR together in a JAR file with the extension .ear for deployment
+2. The IntelliJ IDEA website says they use JAX-RS and Jersey.
