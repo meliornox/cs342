@@ -2,9 +2,8 @@ CREATE TABLE Person(
 	ID integer PRIMARY KEY,
 	firstName varchar(30),
 	lastName varchar(30),
-	status varchar(10),
-	email varchar(50),
-	CHECK (status IN('freshman','sophomore','junior','senior','staff'))	
+	status varchar(10) CHECK (status IN('freshman','sophomore','junior','senior','staff')),
+	email varchar(50)
 );
 
 CREATE TABLE Organization(
@@ -25,22 +24,22 @@ CREATE TABLE PersonOrganization(
 CREATE TABLE Room(
 	ID integer PRIMARY KEY,
 	building varchar(30),
-	number integer,
+	num integer,
 	capacity integer,
-	projector boolean
+	projectorBool char CHECK(projectorBool IN (0,1))
 );
 
 CREATE TABLE Arrangement(
 	ID integer PRIMARY KEY,
-	chair varchar(6) CHECK (chair IN ('swivel','static'),
-	tables boolean,
-	shape varchar(10) CHECK (shape IN ('circle','square','rows')
+	chair varchar(6) CHECK (chair IN ('swivel','static')),
+	tablesBool char CHECK(tablesBool IN (0,1)),
+	shape varchar(10) CHECK (shape IN ('circle','square','rows'))
 );
 
 CREATE TABLE CateringPlan(
-	ID integer PRIMARY KEY
-	mealType varchar(10) CHECK (mealType IN ('breakfast','lunch','dinner','snack','dessert'),
-	formality varchar(10) CHECK (formality IN ('casual','formal')
+	ID integer PRIMARY KEY,
+	mealType varchar(10) CHECK (mealType IN ('breakfast','lunch','dinner','snack','dessert')),
+	formality varchar(10) CHECK (formality IN ('casual','formal'))
 );
 
 CREATE TABLE Food(
@@ -58,13 +57,13 @@ CREATE TABLE PlanFood(
 
 CREATE TABLE Event(
 	ID integer PRIMARY KEY,
-	roomID integer REFERENCES Room(ID) ON DELETE CASCADE,
-	cateringID integer REFERENCES CateringPlan(ID),
-	arrangementID integer REFERENCES Arrangement(ID),
+	roomID integer REFERENCES Room(ID) ON DELETE SET NULL,
+	cateringID integer REFERENCES CateringPlan(ID) ON DELETE SET NULL,
+	arrangementID integer REFERENCES Arrangement(ID) ON DELETE SET NULL,
 	organizerID REFERENCES Person(ID) ON DELETE SET NULL,
 	organizationID REFERENCES Organization(ID),
 	name varchar(30),
-	eventDatetime datetime,
+	eventDate date,
 	duration float,
-	attendence integer
+	attendance integer
 );

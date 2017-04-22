@@ -1,0 +1,4 @@
+DIRECTORY=data__dump_dir
+DUMPFILE=events.dmp
+LOGFILE=events.log
+TABLES=events.Person,events.Organization,events.PersonOrganization,events.Room,events.Arrangement,events.CateringPlan,events.Food,events.PlanFood,events.Event

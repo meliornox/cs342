@@ -5,4 +5,5 @@ DROP TABLE CateringPlan;
 DROP TABLE Arrangement;
 DROP TABLE Room;
 DROP TABLE PersonOrganization;
+DROP TABLE Organization;
 DROP TABLE Person;
