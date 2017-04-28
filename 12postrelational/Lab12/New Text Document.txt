@@ -1,0 +1,38 @@
+Theodore Bigelow
+04/28/17
+Lab 12 answers
+
+12.1.1: Compare and contrast the database connection you built in Guide 12 (in Intellij IDEA) and this database connection (in GlassFish). Do we need both? If so, explain why; if not, explain why not.
+
+We do need both.  IntelliJ and GlassFish both connect to the database for different reasons, one for development and one for production.  We need to be able to access the database when GlassFish has not been started up for development purposes, and in production we will not use IntelliJ since it is an IDE, so they need to be able to connect separately.
+
+12.2.1: How does Intellij map the database tables into Java entity classes?
+
+IntelliJ makes one class for each table to allow row objects with private variable attributes that have pregenerated accessors.
+
+12.2.2: What is the PK class do?
+
+It creates the composite *P*rimary *K*ey for the Personteam class.
+
+12.2.3: Does Intellij default to field or property annotations?
+
+Fields are private and properties are public, since the default is private attributes with pregenerated accessors IntelliJ uses fields.
+
+12.3.1: Does this application perform marshalling? If so, explain what the marshalling does; if not, explain why it’s not needed.
+
+Yes, given that marshalling is the process of turning an object into a standard storage or transmission.  The objects in this class are converted into JSON.
+
+12.3.2: Does this code perform any injection? Again, explain…
+
+Yes, given that injection is when one object supplies the dependencies of another. EntityManager is injected into the CPDBResource class.
+
+12.3.3: What does the entity manager do in this code, if anything?
+
+It is used to access the objects in the database.
+
+12.4.1: How does JPA return the household and team entities related to a given person?
+
+It returns them as a JSON objects inside of the Person JSON object.
+Households are single objects and teams are lists of objects.
+
+
