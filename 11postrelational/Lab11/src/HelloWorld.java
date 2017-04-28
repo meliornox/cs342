@@ -16,4 +16,35 @@ public class HelloWorld {
         // Return some cliched textual content
         return "Hello World";
     }
+
+    @Path("/api")
+    @GET
+    @Produces("text/plain")
+    public String getSimpleMessage() {
+        return "Getting...";
+    }
+
+    @Path("/api/{x}")
+    @PUT
+    @Produces("text/plain")
+    public String putIntegerTo(@PathParam("x") Integer x){
+        return "Putting: " + x;
+    }
+
+    @Path("/api/{s}")
+    @POST
+    @Produces("text/plain")
+    public String postStringTo(@PathParam("s") String s){
+        return "Posting: " + s;
+    }
+
+    @Path("/api/{x}")
+    @DELETE
+    @Consumes("text/plain")
+    public String deleteIntegerFrom(@PathParam("x") Integer x){
+        if (x < 0 || x > 9){
+            return "This integer is not in the range 0-9";
+        }
+        return "Deleting: " + x;
+    }
 }
