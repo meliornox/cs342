@@ -1,0 +1,26 @@
+Work through the following materials this week:
+Read Pramod Sadalage’s NoSQL Databases: An Overview (circa 2012) and explain:
+the key motivations for considering non-relational database systems.
+	Impedence Mismatch
+	Encapsulation of databases with apps
+	Web platform popularity
+aggregate data models.
+	A collection of data interacted with as units
+polyglot persistence.
+	The use of multiple data storage technologies to store data.
+the relevance of the CAP theorem.
+	A system cannot deliver more than two of consistency, availability, and partition tolerance.
+the types of NoSQL databases.
+	Key-Value Databases - Client can get either value for the key, put a value for a key, or delete key.
+    Document Databases - Database that stores and retrieves documents which can be XML, JSON, BSON, etc.
+    Column Family Databases - Database that stores data in column families as rows that have many columns associated with a row key.
+    Graph Databases - Allows the user to store entities and relationships between nodes.
+when (and when not) to use NoSQL database systems.
+	Use NoSQL if you want to improve programmer productivity and improve data access performance.
+    Do not use NoSQL is there are many different entities or when there is very complex relations.
+An alternate source of this basic information is Martin Fowler’s Introduction to NoSQL video.
+Use “Getting Started with the Key/Value API”, Chapters 3–5, from the Oracle NoSQL Database documentation as a reference. Be sure to know how to:
+Compare and contrast Major and minor key components.
+	Major Key - Identifies the entity and is the leading components of the key.
+    Minor Key - Other components of the key.
+Use the appropriate commands to write and retrieve records.
