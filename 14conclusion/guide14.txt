@@ -1,0 +1,18 @@
+Work through the following materials this week:
+
+Read Section 30.1:
+Name and explain the for kinds of control measures required for database security.
+	Access control: Security system must include ways to restrict access
+	Inference control: Don't allow queries that could infer information about an individual.				
+	Flow control: Don't allow data to reach those who are unauthorized to use it.
+	Data encryption: Encode data so that it can't be intercepted.
+Compare and contrast information security and information privacy.
+	Information security involves protecting a system from unathorized use using user authentication, information encryption, access control, firewall policies, and intrusion detection.
+	Information Privacy is information security plus responsible use as specified by the information provider.
+Read Imperva’s Top 5 Database Security Threats.
+Name and explain the security threats discussed in the article.
+	Excessive, inappropriate, and unused privileges: Granting privileges that are unnecessary to the individual's needs.
+	Privilege abuse: An individual using privileges that they need for unathorized purposes
+	Insufficient web application security: SQL injection and Web Shell attacks gain unathorized access to the database via the web application or web server core
+	Weak audit trails: Threats caused by insufficient internal processes or gaps.
+	Unsecured storage media: Keeping unsecuted backups.
