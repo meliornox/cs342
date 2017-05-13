@@ -1,0 +1,8 @@
+a. What type of noSQL database system is Oracle’s NoSQL product, KVLite?
+	*KV*Lite is a *K*ey-*V*alue database system.
+b. The Internet Movie DataBase (imdb.com) is currently implemented in mySQL. If you were required to port it to a noSQL system, which of the noSQL system types would you suggest? Explain your answer.
+	If Oracle's mySQL is already owned, it would seem that switching to Oracle's noSQL would require the least amount of cost as the supplier would be consistent. Otherwise using a free, open-source, well-known, well-documented noSQL system would be preferable, something like mongoDB or Cassandra.
+c. Could you (efficiently) reuse the same key-value structure for exercise 13.1.d (above) and its “opposite”, i.e., get the movies in which a given actor is cast? Why or why not?
+	That kind of an exercise would require switching the keys and values, so the structure would have to change.
+d. NoSQL databases are often referred to as schema-less or schema-free. Explain what this means using examples from your homework solution.
+	Schema-less/free refers to the lack of a rigid schema structure. These databases store data as key-value pairs or JSON documents.  We use key-value pairs, which means that our key can refer to any type of data, and they do not all have to be the same type.  In my code I define my ArrayLists, creating a constraint on the types of data allowed in.  For Roles, for example, my definition of the ArrayList array defined the role of an actor in a movie to be a string.  Since this type restriction is imposed by the code and not as an inherent property of the database, it is said to be schema-free, also known as schema-less.
