@@ -28,10 +28,10 @@ public class GetOrganizationPersonRoles {
         String organizationId = "1";
         String personId = "1";
 
-        Key key = Key.createKey(Arrays.asList("organization", organizationId), Arrays.asList("actorToOrganization", personId));
+        Key key = Key.createKey(Arrays.asList("organization", organizationId), Arrays.asList("personToOrganization", personId));
         Map<Key, ValueVersion> fields = store.multiGet(key, null, null);
 
-        System.out.println("Organization ID:" + "\t" + organizationId + "\n" + "Actor ID" + "\t" + personId);
+        System.out.println("Organization ID:" + "\t" + organizationId + "\n" + "Person ID" + "\t" + personId);
 
         for (Map.Entry<Key, ValueVersion> field2 : fields.entrySet()) {
             String tempRole = new String(field2.getValue().getValue().getValue());

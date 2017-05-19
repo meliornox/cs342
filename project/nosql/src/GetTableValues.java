@@ -1,5 +1,7 @@
 /**
  * Created by jgb23 on 5/13/2017.
+ *
+ * This is the Java file that gets the basic field values from the
  */
 import oracle.kv.KVStore;
 import oracle.kv.KVStoreConfig;
@@ -27,7 +29,7 @@ public class GetTableValues {
         Key nameKey = Key.createKey(Arrays.asList("organization", "1"), Arrays.asList("name"));
         Key budgetKey = Key.createKey(Arrays.asList("organization", "1"), Arrays.asList("year"));
 
-        System.out.println("Table:" + "\t" + "movie" + "\n" + "ID:" + "\t" + "1");
+        System.out.println("Table:" + "\t" + "organization" + "\n" + "ID:" + "\t" + "1");
 
         if (store.get(nameKey) != null) {
             String nameResult = new String(store.get(nameKey).getValue().getValue());

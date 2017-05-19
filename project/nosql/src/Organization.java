@@ -1,5 +1,7 @@
 /**
  * Created by jgb23 on 5/13/2017.
+ *
+ * This is the Java file for the Organization object
  */
 public class Organization {
     private Float budget;

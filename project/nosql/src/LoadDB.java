@@ -1,5 +1,10 @@
 /**
  * Created by jgb23 on 5/13/2017.
+ *
+ * This is the Java file for a database loader.  The loader is called at runtime from GetTableValues.java, which is
+ *     called by fuctions in the other files.
+ *
+ * My key structure:
  */
 
 import oracle.kv.*;
@@ -43,6 +48,10 @@ public class LoadDB {
         jdbcStatement.close();
     }
 
+    // Load People table
+    // person/$id/-/$firstName
+    // person/$id/-/$lastName
+
     public static void loadPeople(KVStore store, Connection jdbcConnection) throws SQLException {
 
         Statement jdbcStatement = jdbcConnection.createStatement();
@@ -71,6 +80,9 @@ public class LoadDB {
         people.close();
         jdbcStatement.close();
     }
+
+    // Load Roles table
+    // roles/$personid/$organizationid-/$role
 
     public static void loadRoles(KVStore store, Connection jdbcConnection) throws SQLException {
 

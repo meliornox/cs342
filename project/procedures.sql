@@ -1,4 +1,5 @@
--- Stored procedure
+-- CHANGED
+-- Stored procedure that moves a projector from one room to another.
 
 SET SERVEROUTPUT ON;
 
@@ -12,6 +13,10 @@ AS
 	noProjector EXCEPTION;
 	hasProjector EXCEPTION;
 BEGIN
+	-- CHANGED
+	SAVEPOINT save;
+	LOCK TABLE Room IN EXCLUSIVE MODE;
+	
 	SELECT projectorBool INTO fromBool FROM Room WHERE id = fromId FOR UPDATE OF projectorBool;
 	SELECT projectorBool INTO toBool FROM Room WHERE id = toId FOR UPDATE OF projectorBool;
 	
@@ -23,14 +28,18 @@ BEGIN
     END IF;
 	
 	UPDATE Room SET projectorBool = 0 WHERE id = fromId;
-	COMMIT;
 	UPDATE Room SET projectorBool = 1 WHERE id = toId;
+	
 	COMMIT;
 EXCEPTION
 	WHEN noProjector THEN
 		RAISE_APPLICATION_ERROR(-20001, 'There is no projector to move');
+		-- CHANGED
+		ROLLBACK TO save;
 	WHEN hasProjector THEN
 		RAISE_APPLICATION_ERROR(-20002, 'Destination room already has a projector');
+		-- CHANGED
+		ROLLBACK TO save;
 END;
 /
 

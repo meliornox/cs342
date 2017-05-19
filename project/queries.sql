@@ -43,12 +43,23 @@ ON P.id = OP.personID;
 
 -- This query counts the number of meals needing to be prepared for today.
 -- This would be used by catering to determine how many people they needed to have on-staff that day.
--- This satisfies the null comparison and statistics requirements.
+-- This satisfies the null comparison requirement.
 
 SELECT SUM(E.attendance)
 FROM Event E
 WHERE TRUNC(E.eventDate) = TRUNC(sysdate)
 AND E.cateringID IS NOT NULL;
+
+-- CHANGED:
+-- This query lists all organizations from largest to smallest.
+-- This would be used by Calvin's Student Organization Committee to determine which clubs were the most popular.
+-- This satisfies the statistics on grouped data requirement.
+
+SELECT O.name, COUNT(PO.personID)
+FROM Organization O, PersonOrganization PO
+WHERE PO.personID = O.ID
+GROUP BY O.name
+ORDER BY COUNT(PO.personID) DESC;
 
 -- This query is used to determine what buildings aren't being used today.
 -- This is used by building staff to know which buildings to lock today.

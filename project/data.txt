@@ -1,20 +1,19 @@
-I got the data from being involved with event planning comittees over the past two years. As I didn't get a chance to go over the menus that Catering offers in detail, the data represented by the Food table is an approximation based on having ordered food form them in the past.  Rooms are a rough estimate selected from Commons and the Commons Annex. The CateringPlans, PlanFoods, and Events are hypotheticals drawn from available options. I have generated People from the leaders of SAGA and Anime Club.
+I got the data from being involved with event planning comittees over the past two years. As I didn't get a chance to go over the menus that Catering offers in detail, the data represented by the Food table is an approximation based on having ordered food form them in the past.  Rooms are a rough estimate selected from Commons and the Commons Annex. The CateringPlans, PlanFoods, and Events are hypotheticals drawn from available options. I have generated People from generatedata.com.
 
 The nontrivial functional dependencies for my schema are:
-personID -> firstName, lastName, status
-organizationID -> staffAdvisor, organizationName, organizationDescription, budget
-personID, organizationID -> personRole
-building, number -> capacity, projector, fee
-arrangementID -> chair, shape, tables
-cateringPlanID -> mealType, formality
-foodID -> foodName, foodDescription, calories, unitPrice
-roomID, eventDatetime -> cateringID, arrangementID, organizerID, eventName, attendance, duration
+Person ID -> firstName, lastName, status, email
+Organization ID -> staffAdvisor, name, description, budget
+PersonID OrganizationID -> role
+Room ID-> building, num, capacity, projectorBool
+Arrangement ID -> chair, shape, tablesBool
+CateringPlan ID -> mealType, formality
+Food ID -> foodName, foodDescription, calories, unitPrice
+Event ID -> roomID, eventDate, cateringID, arrangementID, organizerID, eventName, attendance, duration
 Since all nontrivial functional dependencies' left sides are candidate keys, the relation is in BCNF.
 
 Multivalued dependencies:
 planID ->> foodID
 personID ->> organizationID
-arrangementID ->> chair | shape | tables
 Since these are superkeys, the relation is in 4NF.
 
 I chose 4NF because it is the strongest normal form. My relation was not difficult to put into 4NF with a few join tables, so I went ahead and made it as strong as I could.

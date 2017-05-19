@@ -1,12 +1,21 @@
--- The functionality of this trigger is difficult to implement with table constraints as every event should have a room, but occasionally rooms will become unavailable due to required maintenence.  If there is an event at that location, it should not be deleted but it does need a new room assignment.
-CREATE OR REPLACE TRIGGER RoomRequirement
-	BEFORE DELETE OR INSERT OR UPDATE ON Event
-	FOR EACH ROW
-WHEN (new.roomID IS NULL)
+-- CHANGED
+-- This trigger keeps a log of when the room was changed on the Events table and what the old and new values are.
+
+DROP TABLE EventRoomLog;
+CREATE TABLE EventRoomLog (
+	EventID integer,
+	dateChanged date,
+	oldRoom integer,
+	newRoom integer,
+);
+
+
+CREATE OR REPLACE TRIGGER roomUpdate AFTER UPDATE UPDATE OF roomID ON Event
 BEGIN
-    dbms_output.put_line('Event ' || :new.ID || ' needs a new room assignment.');
+    INSERT INTO EventRoomLog VALUES (ID, SYSDATE, :OLD.roomID, :NEW.roomID);
 END;
 /
+SHOW ERRORS;
 
 -- Testing trigger
 BEGIN

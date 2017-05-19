@@ -1,6 +1,15 @@
-/**
- * Created by jgb23 on 5/12/2017.
- */
+/*
+** Created by jgb23 on 5/12/2017.
+** @author kvlinden
+** 
+** @author meliornox
+** @verson Spring 2017
+** 
+** This stateless session bean serves as a RESTful resource handler for the events database.
+** It uses a container-managed entity manager.
+** 
+** The example exercises of RESTful Person record manipulation is useful for the viewing of student distribution across class levels.
+*/
 
 import models.*;
 
@@ -13,13 +22,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-/**
- * This stateless session bean serves as a RESTful resource handler for the CPDB.
- * It uses a container-managed entity manager.
- *
- * @author kvlinden
- * @version Spring, 2017
- */
 @Stateless
 @Path("events")
 public class EventsResource {
@@ -43,6 +45,12 @@ public class EventsResource {
         return "Hello, JPA!";
     }
 
+    /**
+     * GET a Person.
+     *
+	 * @param long id of person to get
+     * @return a PersonEntity
+     */
     @GET
     @Path("person/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,6 +58,12 @@ public class EventsResource {
         return em.find(PersonEntity.class, id);
     }
 
+    /**
+     * PUT a Person.
+	 * 
+     * @param long id of person to put
+     * @return a static message on success or failure
+     */
     @PUT
     @Path("person/{id}")
     @Consumes("models/personentity")
@@ -64,6 +78,12 @@ public class EventsResource {
         }
     }
 
+    /**
+     * POST a Person.
+	 * 
+     * @param PersonEntity person to post
+     * @return a static message on success or failure
+     */
     @POST
     @Path("people")
     @Consumes("models/personentity")
@@ -82,6 +102,12 @@ public class EventsResource {
         }
     }
 
+    /**
+     * DELETE a Person.
+     *
+	 * @param id, the Person id
+     * @return a static message indicating success or failure
+     */
     @DELETE
     @Path("person/{id}")
     @Produces(MediaType.APPLICATION_JSON)
